@@ -16,7 +16,37 @@ public class MainController {
 		
         return "index";  
 	}
+	@GetMapping(value= {"/productos"})
+	public String productos(){
+		
+		
+        return "productos";  
+	}
 	
 	
+	@GetMapping(value= {"/contacto"})
+	public String contacto(){
+		
+		
+        return "contacto";  
+	}
+	@GetMapping(value= {"/carrito"})
+	public String carrito(){
+		
+		
+        return "carrito";  
+	}
+	@GetMapping(value= {"/cliente"})
+	public String cliente(){
+		
+		
+        return "cliente";  
+	}
+	@GetMapping(value= {"/pago"})
+	public String pago(){
+		
+		
+        return "pago";  
+	}
 
 }

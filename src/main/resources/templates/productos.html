@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Catálogo de Productos</title>
+    <link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{styles/styles.css}">
+</head>
+<body>
+
+<!-- Barra de navegación -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" th:href="@{/index}">Dulce Delicia</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/index}"}>Inicio</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/producto}">Productos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/contacto}">Contacto</a>
+            </li>
+        </ul>
+    </div>
+    <!-- Icono de carrito de compra -->
+    <div id="cart-icon">
+        <img th:src="@{img/carritoicono.png}" alt="Carrito de Compra">
+        <span class="badge badge-pill badge-danger" id="cart-count">0</span>
+    </div>
+</nav>
+
+
+
+<!-- Catálogo de Productos -->
+<div class="container">
+    <h2>Catálogo de Productos</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <img class="card-img-top" src="producto1.jpg" alt="Producto 1">
+                <div class="card-body">
+                    <h5 class="card-title">Producto 1</h5>
+                    <p class="card-text">Descripción del producto 1.</p>
+                    <button class="btn btn-primary add-to-cart" data-name="Producto 1" data-price="10">Agregar al carrito</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Agrega más productos aquí -->
+    </div>
+</div>
+
+<!-- Carrito de Compra -->
+<div id="cart" class="container mt-4">
+    <h2>Carrito de Compra</h2>
+    <ul id="cart-items" class="list-group">
+        <!-- Los elementos del carrito se agregarán aquí -->
+    </ul>
+    <p id="cart-total">Total: $0</p>
+</div>
+
+<script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
+<script th:src="@{https://cdn.jsdelivr.net/npm/sweetalert2@11}"></script>
+<script th:src="@{js/script.js}"></script>
+</body>
+</html>
