@@ -28,11 +28,14 @@
             </li>
         </ul>
     </div>
-    <!-- Icono de carrito de compra -->
-    <div id="cart-icon">
-        <img th:src="@{img/carritoicono.png}" alt="Carrito de Compra">
-        <span class="badge badge-pill badge-danger" id="cart-count">0</span>
-    </div>
+<!-- Icono de carrito de compra -->
+<div id="cart-icon" onclick="window.location.href='/carrito';" style="cursor: pointer;">
+    <img th:src="@{img/carritoicono.png}" alt="Carrito de Compra">
+    <span class="badge badge-pill badge-danger" id="cart-count">0</span>
+    <p style="margin: 0;"><b>Carrito</b></p>
+</div>
+
+
 </nav>
 
 
@@ -43,12 +46,16 @@
     <div class="row">
         <div class="col-md-4">
             <div class="card">
-                <img class="card-img-top" src="producto1.jpg" alt="Producto 1">
-                <div class="card-body">
-                    <h5 class="card-title">Producto 1</h5>
-                    <p class="card-text">Descripción del producto 1.</p>
-                    <button class="btn btn-primary add-to-cart" data-name="Producto 1" data-price="10">Agregar al carrito</button>
-                </div>
+                
+                <div th:each="producto : ${productos}" class="card">
+				    <div class="card-body">
+						<img class="card-img-top" src="producto1.jpg" alt="Producto 1">
+				        <h5 class="card-title" th:text="${producto.nombre}"></h5>
+				        <p class="card-text" th:text="${producto.descripcion}"></p>
+				        <p class="card-text" th:text="'Precio: ' + ${producto.precio}"></p>
+				        <button class="btn btn-primary add-to-cart" th:attr="data-name=${producto.nombre}, data-price=${producto.precio}">Agregar al carrito</button>
+				    </div>
+				</div>
             </div>
         </div>
 
@@ -67,6 +74,6 @@
 
 <script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
 <script th:src="@{https://cdn.jsdelivr.net/npm/sweetalert2@11}"></script>
-<script th:src="@{js/script.js}"></script>
+<script th:src="@{js/carrito.js}"></script>
 </body>
 </html>
