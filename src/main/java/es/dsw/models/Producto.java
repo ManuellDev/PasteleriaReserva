@@ -6,13 +6,16 @@ public class Producto {
 	private String nombre;
 	private String descripcion;
 	private float precio;
-	public Producto(int id_producto, String nombre, String descripcion, float precio) {
+	private String imagen;
+	public Producto(int id_producto, String nombre, String descripcion, float precio, String imagen) {
+	
 		this.id_producto = id_producto;
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.precio = precio;
+		this.imagen = imagen;
 	}
-	
+
 	
 	public Producto() {
 		// TODO Auto-generated constructor stub
@@ -43,7 +46,14 @@ public class Producto {
 	public void setPrecio(float precio) {
 		this.precio = precio;
 	}
-	
+	public String getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
+	}
+
 	
 	
 

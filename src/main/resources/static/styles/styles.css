@@ -108,6 +108,7 @@ a:hover {
     padding: 0 20px;
 }
 
+
 /* Contenedor de productos */
 .productos {
     display: grid;
@@ -168,5 +169,8 @@ a:hover {
     position: absolute;
     top: -5px;
     right: -5px;
+}
+.card-body{
+	padding: 20px;
 }
 

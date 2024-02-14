@@ -10,9 +10,8 @@
         document.getElementById('total' + quantityId.slice(-1)).innerText = '$' + total.toFixed(2);
     }
     
-     // Agregar JavaScript para hacer que el carrusel se desplace automáticamente
-    $(document).ready(function(){
-        $('.carousel').carousel({
-            interval: 2000 // Cambia el intervalo según lo que desees (en milisegundos)
-        });
+    document.addEventListener('DOMContentLoaded', function() {
+    $('.carousel').carousel({
+        interval: 2000 // Cambia el intervalo según lo que desees (en milisegundos)
     });
+});
