@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backoffice de administración de una pastelería</title>
+    <!-- Bootstrap CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Estilos personalizados -->
+    <style>
+        /* Colores pastel */
+        :root {
+            --pastel-rosa: #f9c8d9;
+            --pastel-azul: #c8e4f9;
+            --pastel-verde: #c8f9e4;
+            --pastel-amarillo: #f9f3c8;
+            --pastel-lila: #e4c8f9;
+        }
+
+        /* Fondo del body */
+        body {
+            background-color: var(--pastel-rosa);
+        }
+
+        /* Fondo del sidebar */
+        .sidebar {
+            background-color: var(--pastel-azul);
+        }
+
+        /* Fondo del header */
+        .header {
+            background-color: var(--pastel-verde);
+        }
+
+        /* Fondo del main */
+        .main {
+            background-color: var(--pastel-amarillo);
+        }
+
+        /* Fondo del footer */
+        .footer {
+            background-color: var(--pastel-lila);
+        }
+
+        /* Estilo de la foto de perfil */
+        .profile-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* Estilo de los enlaces del sidebar */
+        .sidebar-link {
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Estilo de los enlaces del sidebar al pasar el ratón */
+        .sidebar-link:hover {
+            color: black;
+            text-decoration: underline;
+        }
+
+        /* Estilo de la tabla de usuarios */
+        .table-users {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        /* Estilo de las celdas de la tabla de usuarios */
+        .table-users td, .table-users th {
+            border: 1px solid black;
+            padding: 10px;
+        }
+
+        /* Estilo del botón de borrar usuario */
+        .btn-delete-user {
+            color: white;
+            background-color: red;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        /* Estilo del botón de borrar usuario al pasar el ratón */
+        .btn-delete-user:hover {
+            background-color: darkred;
+        }
+
+        /* Estilo del formulario de crear usuario */
+        .form-create-user {
+            width: 50%;
+            margin: 0 auto;
+        }
+
+        /* Estilo de los inputs del formulario de crear usuario */
+        .form-create-user input {
+            width: 100%;
+            margin: 10px 0;
+            padding: 5px;
+        }
+
+        /* Estilo del botón de crear usuario */
+        .btn-create-user {
+            color: white;
+            background-color: green;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        /* Estilo del botón de crear usuario al pasar el ratón */
+        .btn-create-user:hover {
+            background-color: darkgreen;
+        }
+
+        /* Estilo de la tabla de pedidos */
+        .table-orders {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        /* Estilo de las celdas de la tabla de pedidos */
+        .table-orders td, .table-orders th {
+            border: 1px solid black;
+            padding: 10px;
+        }
+
+        /* Estilo del botón de borrar pedido */
+        .btn-delete-order {
+            color: white;
+            background-color: red;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        /* Estilo del botón de borrar pedido al pasar el ratón */
+        .btn-delete-order:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+    <!-- Contenedor principal -->
+    <div class="container-fluid">
+        <!-- Fila que contiene el sidebar y el contenido -->
+        <div class="row">
+            <!-- Sidebar con el menú de opciones -->
+            <div class="col-2 sidebar">
+                <ul class="list-unstyled">
+                    <li><a href="#" class="sidebar-link">Listar usuarios</a></li>
+                    <li><a href="#" class="sidebar-link">Crear usuario</a></li>
+                    <li><a href="#" class="sidebar-link">Listar pedidos</a></li>
+                    <li><a href="#" class="sidebar-link">Borrar pedido</a></li>
+                </ul>
+            </div>
+            <!-- Contenido principal -->
+            <div class="col-10 main">
+                <!-- Header con la foto de perfil y el nombre de usuario -->
+                <div class="row header">
+                    <div class="col-12">
+                        <img src="foto.jpg" alt="Foto de perfil" class="profile-img">
+                        <span>Nombre de usuario</span>
+                    </div>
+                </div>
+                <!-- Sección de listar usuarios -->
+                <div class="row">
+                    <div class="col-12">
+                        <h1>Listar usuarios</h1>
+                        <table class="table-users">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Email</th>
+                                    <th>Rol</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Alicia</td>
+                                    <td>alicia@gmail.com</td>
+                                    <td>Administradora</td>
+                                    <td><button class="btn-delete-user">Borrar</button></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Bruno</td>
+                                    <td>bruno@gmail.com</td>
+                                    <td>Empleado</td>
+                                    <td><button class="btn-delete-user">Borrar</button></td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Carlos</td>
+                                    <td>carlos@gmail.com</td>
+                                    <td>Cliente</td>
+                                    <td><button class="btn-delete-user">Borrar</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- Sección de crear usuario -->
+                <div class="row">
+                    <div class="col-12">
+                        <h1>Crear usuario</h1>
+                        <form class="form-create-user">
+                            <input type="text" name="name" placeholder="Nombre">
+                            <input type="email" name="email" placeholder="Email">
+                            <input type="password" name="password" placeholder="Contraseña">
+                            <input type="text" name="role" placeholder="Rol">
+                            <button class="btn-create-user">Crear</button>
+                        </form>
+                    </div>
+                </div>
+                <!-- Sección de listar pedidos -->
+                <div class="row">
+                    <div class="col-12">
+                        <h1>Listar pedidos</h1>
+                        <table class="table-orders">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Cliente</th>
+                                    <th>Producto</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio</th>
+                                    <th>Fecha</th>
+                                    <th>Estado</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Carlos</td>
+                                    <td>Tarta de chocolate</td>
+                                    <td>1</td>
+                                    <td>15€</td>
+                                    <td>14/02/2024</td>
+                                    <td>Pendiente</td>
+                                    <td><button class="btn-delete-order">Borrar</button></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Diana</td>
+                                    <td>Galletas de vainilla</td>
+                                    <td>12</td>
+                                    <td>6€</td>
+                                    <td>13/02/2024</td>
+                                    <td>Entregado</td>
+                                    <td><button class="btn-delete-order">Borrar</button></td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Elena</td>
+                                    <td>Pastel de zanahoria</td>

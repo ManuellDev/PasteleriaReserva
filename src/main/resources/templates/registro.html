@@ -3,9 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro</title>
+    <title>Registro en la Pastelería</title>
+     <link rel="stylesheet" type="text/css" th:href="@{/styles/registro.css}">
+
 </head>
 <body>
-    
+    <form th:action="@{/registro}" method="POST">
+        <div class="logo">
+            <img src="https://via.placeholder.com/150" alt="Logo de la Pastelería">
+        </div>
+        <h2>Registro en la Pastelería</h2>
+        <input type="text" name="nombre" placeholder="Nombre" required>
+        <input type="text" name="apellido1" placeholder="Apellido1">
+        <input type="text" name="apellido2" placeholder="Apellido2">
+        <input type="text" name="nif" placeholder="Nif" required>
+        <input type="email" name="email" placeholder="Email">
+        <input type="text" name="usuario" placeholder="Nombre de usuario" required>
+        <input type="password" name="contraseña" placeholder="Contraseña" required>
+        <input type="password" name="confirmar_contraseña" placeholder="Confirmar contraseña" required>
+        <input type="submit" value="Registrarse">
+    </form>
 </body>
 </html>

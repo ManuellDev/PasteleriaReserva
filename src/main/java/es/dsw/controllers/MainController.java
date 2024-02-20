@@ -1,8 +1,6 @@
 package es.dsw.controllers;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,16 +16,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import es.dsw.connections.MySqlConnection;
 import es.dsw.models.Carrito;
 import es.dsw.models.Producto;
+import es.dsw.models.User;
+import es.dsw.repository.ProductoRepository;
+import es.dsw.repository.UserRepository;
 
 
 @Controller
 @SessionAttributes({"carritos"})
 public class MainController {
-	 @Autowired
-	    private MySqlConnection mySqlConnection;
+
 
 
 	@GetMapping(value= {"/","/index"})
@@ -46,42 +45,46 @@ public class MainController {
         return "login";  
 	}
 	
-	@GetMapping(value= {"/registro"})
-	public String registro(){
-		
-		
-        return "registro";  
+	@Autowired
+	private UserRepository userRepository;
+    
+    @GetMapping("/registro")
+    public String mostrarFormularioRegistro() {
+        return "registro"; // Devuelve el nombre de la plantilla para el formulario de registro
+    }
+
+
+	@PostMapping("/registro")
+	public String registro(@RequestParam(name ="nombre",defaultValue ="prueba") String nombre,
+	                       @RequestParam(name ="apellido1",defaultValue ="prueba") String apellido1,
+	                       @RequestParam(name ="apellido2",defaultValue ="prueba") String apellido2,
+	                       @RequestParam(name ="nif",defaultValue ="prueba") String nif,
+	                       @RequestParam(name ="email",defaultValue ="prueba") String email,
+	                       @RequestParam(name ="usuario",defaultValue ="prueba") String usuario,
+	                       @RequestParam(name ="contraseña",defaultValue ="prueba") String contraseña) {
+	    User user = new User();
+	    user.setNombre(nombre);
+	    user.setApellido1(apellido1);
+	    user.setApellido2(apellido2);
+	    user.setNif(nif);
+	    user.setEmail(email);
+	    user.setUsername(usuario);
+	    user.setPassword(contraseña);
+	    
+	    userRepository.save(user);
+	    
+	    return "redirect:/login"; // Redirige a la página de inicio de sesión después del registro
 	}
 	
-	@GetMapping(value= {"/productos"})
-	public String productos(Model model){
-	        List<Producto> productos = new ArrayList<>(); 
-	        String sql = "SELECT * FROM productos";
+	@Autowired
+    private ProductoRepository productoRepository;
 
-	        mySqlConnection.open();
-	        ResultSet resultSet = mySqlConnection.executeSelect(sql);
-	        try {
-	            while (resultSet.next()) {
-	                Producto producto = new Producto();
-	                producto.setId_producto(resultSet.getInt("id_producto"));
-	                producto.setNombre(resultSet.getString("nombre"));
-	                producto.setDescripcion(resultSet.getString("descripcion"));
-	                producto.setPrecio(resultSet.getFloat("precio"));
-	                producto.setImagen(resultSet.getString("imagen"));
-	                productos.add(producto);
-	            }
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        } finally {
-	            mySqlConnection.close();
-	        }
-
-
-	        model.addAttribute("productos", productos);
-
-		
-        return "productos";  
-	}
+    @GetMapping(value = {"/productos"})
+    public String productos(Model model) {
+        List<Producto> productos = productoRepository.findAll();
+        model.addAttribute("productos", productos);
+        return "productos";
+    }
 	@ModelAttribute("carritos")
     public Map<Integer, Carrito> getCarritos() {
         return new HashMap<>();
@@ -116,6 +119,7 @@ public class MainController {
 		
         return "contacto";  
 	}
+	
 	
 	@GetMapping(value= {"/carrito"})
 	public String carrito(Model model,@ModelAttribute("carritos") Map<Integer, Carrito> carritos){
@@ -153,6 +157,13 @@ public class MainController {
 		
 		
         return "finalizar";  
+	}
+	
+	@GetMapping(value= {"/BackOffice"})
+	public String BackOffice(){
+		
+		
+        return "BackOffice";  
 	}
 
 }
