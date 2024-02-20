@@ -1,17 +1,19 @@
 package es.dsw.models;
 
+import java.util.Collection;
+import java.util.Set;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Table(name = "users")
-public class User {
-    @Id
+public class User implements UserDetails {
+	
+	private static final long serialVersionUID = 1L;
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="IDUSER_USF")
     private Integer userID;
@@ -25,14 +27,22 @@ public class User {
     private String nif;
     @Column(name="EMAIL_USF")
     private String email;
-    @Column(name="USERNAME_USF")
+    @Column(name="USERNAME_USF",nullable=false, unique=true)
     private String username;
     @Column(name="PASSWORD_USF")
     private String password;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "USERROL",
+            joinColumns = @JoinColumn(name = "IDUSER_URF"),
+            inverseJoinColumns = @JoinColumn(name = "IDROL_URF")
+    )
+    private Set<Roles> roles;
     
-    
-    
-	public User(Integer userID, String nombre, String apellido1, String apellido2, String nif, String email,String username, String password) {
+
+
+    public User(Integer userID, String nombre, String apellido1, String apellido2, String nif, String email,
+			String username, String password, Set<Roles> roles) {
 		this.userID = userID;
 		this.nombre = nombre;
 		this.apellido1 = apellido1;
@@ -41,10 +51,13 @@ public class User {
 		this.email = email;
 		this.username = username;
 		this.password = password;
+		this.roles = roles;
 	}
-
+   
 	public User() {
 	}
+	
+
 
 	public Integer getUserID() {
 		return userID;
@@ -109,19 +122,42 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
-    
-    
-	
-	
-    
 
-	
-	
-	
-    
-    
-    
-    
+	public Set<Roles> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Roles> roles) {
+		this.roles = roles;
+	}
+
+	@Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // Devolver los roles del usuario como autoridades
+        return roles;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        // Devolver true si la cuenta no está expirada
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        // Devolver true si la cuenta no está bloqueada
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        // Devolver true si las credenciales no están expiradas
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        // Devolver true si el usuario está habilitado
+        return true;
+    }
 }

@@ -45,9 +45,11 @@ public class MainController {
         return "login";  
 	}
 	
+	
 	@Autowired
 	private UserRepository userRepository;
-    
+
+	
     @GetMapping("/registro")
     public String mostrarFormularioRegistro() {
         return "registro"; // Devuelve el nombre de la plantilla para el formulario de registro

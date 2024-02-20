@@ -16,6 +16,9 @@
         <input type="text"  placeholder="Nombre de usuario" th:name="@{username}" required>
         <input type="password"  placeholder="Contraseña" th:name="@{password}" required>
         <input type="submit" value="Iniciar sesión">
-    </form>
+ <p>¿No estás registrado? <a th:href="@{/registro}">Haz clic aquí para registrarte</a>.</p>
+  </form>
+       
+
 </body>
 </html>

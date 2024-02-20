@@ -32,7 +32,7 @@ public class MySqlConnection {
 	//Puerto
 	private String puerto = "3306";
 	//Nombre de la base de datos
-	private String nameDB = "pasteleria_reserva";
+	private String nameDB = "db_pasteleria";
 	//Usuario de conexión
 	private String usuario = "root";
 	//Contraseña
