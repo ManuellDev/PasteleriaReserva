@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,6 +49,9 @@ public class MainController {
 	
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+  
 
 	
     @GetMapping("/registro")
@@ -63,15 +67,18 @@ public class MainController {
 	                       @RequestParam(name ="nif",defaultValue ="prueba") String nif,
 	                       @RequestParam(name ="email",defaultValue ="prueba") String email,
 	                       @RequestParam(name ="usuario",defaultValue ="prueba") String usuario,
-	                       @RequestParam(name ="contraseña",defaultValue ="prueba") String contraseña) {
+	                       @RequestParam(name ="contraseña",defaultValue ="prueba") String contraseña)
+	{
 	    User user = new User();
+	 // Codificar la contraseña antes de devolver el objeto UserDetails
+	    String encodedPassword = passwordEncoder.encode(contraseña);        
 	    user.setNombre(nombre);
 	    user.setApellido1(apellido1);
 	    user.setApellido2(apellido2);
 	    user.setNif(nif);
 	    user.setEmail(email);
 	    user.setUsername(usuario);
-	    user.setPassword(contraseña);
+	    user.setPassword(encodedPassword);
 	    
 	    userRepository.save(user);
 	    
