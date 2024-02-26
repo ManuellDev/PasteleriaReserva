@@ -1,3 +1,6 @@
+// Obtén el token CSRF del formulario si es necesario
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
 
 
 $(document).ready(function() {
@@ -21,6 +24,7 @@ $(document).ready(function() {
                 url: '/modificar_carrito',
                 type: 'POST',
                 contentType: 'application/json',
+                beforeSend: request => request.setRequestHeader(header, token),		    	
                 data: JSON.stringify(articulo),	
 				success: function (data) {
 		        console.log(data);

@@ -1,0 +1,84 @@
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .navbar {
+            background-color: #955251 !important;
+            color: white;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            overflow-y: auto;
+            padding-top: 20px;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            color: white !important;
+        }
+
+        .navbar-nav a {
+            color: white !important;
+        }
+
+        .navbar-nav a:hover {
+            color: #dee2e6 !important;
+        }
+
+        .navbar-nav .active {
+            font-weight: bold;
+        }
+
+        .page-content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+
+        .user-profile {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 200px;
+            background-color: #f8f9fa;
+            color: black; /* Cambiado a color negro para mejor contraste */
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000; /* Asegura que el perfil esté sobre el contenido */
+        }
+
+        .user-profile h4 {
+            margin-bottom: 10px;
+        }
+
+        .user-profile p {
+            margin-bottom: 5px;
+        }
+
+        .btn-crear-usuario {
+            width: 400px;
+            margin-top: 20px;
+        }
+       
+
+        @media (max-width: 768px) {
+            .navbar {
+                position: relative;
+                height: auto;
+                width: 100%;
+                margin-bottom: 20px;
+            }
+            .page-content {
+                margin-left: 0;
+            }
+            .user-profile {
+                position: relative;
+                width: 100%;
+                margin: 20px auto;
+                left: auto;
+                top: auto;
+            }
+}   

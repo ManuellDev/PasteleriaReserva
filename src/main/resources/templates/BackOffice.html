@@ -1,262 +1,164 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Backoffice de administración de una pastelería</title>
-    <!-- Bootstrap CDN -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- Estilos personalizados -->
-    <style>
-        /* Colores pastel */
-        :root {
-            --pastel-rosa: #f9c8d9;
-            --pastel-azul: #c8e4f9;
-            --pastel-verde: #c8f9e4;
-            --pastel-amarillo: #f9f3c8;
-            --pastel-lila: #e4c8f9;
-        }
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Backoffice de administración de una pastelería</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" th:href="@{/styles/BackOffice.css}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+	<style>
 
-        /* Fondo del body */
-        body {
-            background-color: var(--pastel-rosa);
-        }
-
-        /* Fondo del sidebar */
-        .sidebar {
-            background-color: var(--pastel-azul);
-        }
-
-        /* Fondo del header */
-        .header {
-            background-color: var(--pastel-verde);
-        }
-
-        /* Fondo del main */
-        .main {
-            background-color: var(--pastel-amarillo);
-        }
-
-        /* Fondo del footer */
-        .footer {
-            background-color: var(--pastel-lila);
-        }
-
-        /* Estilo de la foto de perfil */
-        .profile-img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        /* Estilo de los enlaces del sidebar */
-        .sidebar-link {
-            color: white;
-            text-decoration: none;
-        }
-
-        /* Estilo de los enlaces del sidebar al pasar el ratón */
-        .sidebar-link:hover {
-            color: black;
-            text-decoration: underline;
-        }
-
-        /* Estilo de la tabla de usuarios */
-        .table-users {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        /* Estilo de las celdas de la tabla de usuarios */
-        .table-users td, .table-users th {
-            border: 1px solid black;
-            padding: 10px;
-        }
-
-        /* Estilo del botón de borrar usuario */
-        .btn-delete-user {
-            color: white;
-            background-color: red;
-            border: none;
-            padding: 5px 10px;
-            cursor: pointer;
-        }
-
-        /* Estilo del botón de borrar usuario al pasar el ratón */
-        .btn-delete-user:hover {
-            background-color: darkred;
-        }
-
-        /* Estilo del formulario de crear usuario */
-        .form-create-user {
-            width: 50%;
-            margin: 0 auto;
-        }
-
-        /* Estilo de los inputs del formulario de crear usuario */
-        .form-create-user input {
-            width: 100%;
-            margin: 10px 0;
-            padding: 5px;
-        }
-
-        /* Estilo del botón de crear usuario */
-        .btn-create-user {
-            color: white;
-            background-color: green;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-        }
-
-        /* Estilo del botón de crear usuario al pasar el ratón */
-        .btn-create-user:hover {
-            background-color: darkgreen;
-        }
-
-        /* Estilo de la tabla de pedidos */
-        .table-orders {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        /* Estilo de las celdas de la tabla de pedidos */
-        .table-orders td, .table-orders th {
-            border: 1px solid black;
-            padding: 10px;
-        }
-
-        /* Estilo del botón de borrar pedido */
-        .btn-delete-order {
-            color: white;
-            background-color: red;
-            border: none;
-            padding: 5px 10px;
-            cursor: pointer;
-        }
-
-        /* Estilo del botón de borrar pedido al pasar el ratón */
-        .btn-delete-order:hover {
-            background-color: darkred;
-        }
-    </style>
+	</style>
 </head>
+
 <body>
-    <!-- Contenedor principal -->
-    <div class="container-fluid">
-        <!-- Fila que contiene el sidebar y el contenido -->
-        <div class="row">
-            <!-- Sidebar con el menú de opciones -->
-            <div class="col-2 sidebar">
-                <ul class="list-unstyled">
-                    <li><a href="#" class="sidebar-link">Listar usuarios</a></li>
-                    <li><a href="#" class="sidebar-link">Crear usuario</a></li>
-                    <li><a href="#" class="sidebar-link">Listar pedidos</a></li>
-                    <li><a href="#" class="sidebar-link">Borrar pedido</a></li>
-                </ul>
-            </div>
-            <!-- Contenido principal -->
-            <div class="col-10 main">
-                <!-- Header con la foto de perfil y el nombre de usuario -->
-                <div class="row header">
-                    <div class="col-12">
-                        <img src="foto.jpg" alt="Foto de perfil" class="profile-img">
-                        <span>Nombre de usuario</span>
-                    </div>
-                </div>
-                <!-- Sección de listar usuarios -->
-                <div class="row">
-                    <div class="col-12">
-                        <h1>Listar usuarios</h1>
-                        <table class="table-users">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Nombre</th>
-                                    <th>Email</th>
-                                    <th>Rol</th>
-                                    <th>Acción</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Alicia</td>
-                                    <td>alicia@gmail.com</td>
-                                    <td>Administradora</td>
-                                    <td><button class="btn-delete-user">Borrar</button></td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Bruno</td>
-                                    <td>bruno@gmail.com</td>
-                                    <td>Empleado</td>
-                                    <td><button class="btn-delete-user">Borrar</button></td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Carlos</td>
-                                    <td>carlos@gmail.com</td>
-                                    <td>Cliente</td>
-                                    <td><button class="btn-delete-user">Borrar</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <!-- Sección de crear usuario -->
-                <div class="row">
-                    <div class="col-12">
-                        <h1>Crear usuario</h1>
-                        <form class="form-create-user">
-                            <input type="text" name="name" placeholder="Nombre">
-                            <input type="email" name="email" placeholder="Email">
-                            <input type="password" name="password" placeholder="Contraseña">
-                            <input type="text" name="role" placeholder="Rol">
-                            <button class="btn-create-user">Crear</button>
-                        </form>
-                    </div>
-                </div>
-                <!-- Sección de listar pedidos -->
-                <div class="row">
-                    <div class="col-12">
-                        <h1>Listar pedidos</h1>
-                        <table class="table-orders">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Cliente</th>
-                                    <th>Producto</th>
-                                    <th>Cantidad</th>
-                                    <th>Precio</th>
-                                    <th>Fecha</th>
-                                    <th>Estado</th>
-                                    <th>Acción</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Carlos</td>
-                                    <td>Tarta de chocolate</td>
-                                    <td>1</td>
-                                    <td>15€</td>
-                                    <td>14/02/2024</td>
-                                    <td>Pendiente</td>
-                                    <td><button class="btn-delete-order">Borrar</button></td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Diana</td>
-                                    <td>Galletas de vainilla</td>
-                                    <td>12</td>
-                                    <td>6€</td>
-                                    <td>13/02/2024</td>
-                                    <td>Entregado</td>
-                                    <td><button class="btn-delete-order">Borrar</button></td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Elena</td>
-                                    <td>Pastel de zanahoria</td>
+
+	<!-- Navbar -->
+	<nav class="navbar">
+		<div class="container-fluid">
+			<!-- Mi perfil -->
+			<div class="user-profile">
+				<h4>Mi Perfil</h4>
+				<p><strong>Usuario:</strong> <span th:text="${user.username}"></span></p>
+				<p><strong>Nombre:</strong> <span th:text="${user.nombre}"></span></p>
+				<p th:utext="'<strong>Apellidos:</strong> ' + ${user.apellido1} + ' ' + ${user.apellido2}"></p>
+			</div>
+			<a sec:authorize="hasRole('admin')" class="btn btn-primary" href="#crearUsuario" data-toggle="modal" data-target="#crearUsuarioModal">Crear
+				Usuario</a>
+			<form th:action="@{/logout}" method="POST" id="logoutForm">
+				<button id="btn-logout" type="submit" class="btn btn-primary" style="margin-top: 20px;"> Cerrar
+					Sesión</button>
+			</form>
+			<a class="btn btn-primary" th:href="@{/index}" style="margin-top: 20px;">Atras</a>
+		</div>
+
+
+	</nav>
+
+	<div sec:authorize="hasAnyRole('admin','pastelero')" class="page-content">
+		<h2  id="listarPedidos">Listar Pedidos</h2>
+		<!-- Aquí va la tabla para listar pedidos -->
+		<table class="table">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Cliente</th>
+					<th>Estado</th>
+					<th>Acciones</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="pedido : ${pedidos}">
+					<td th:text="${pedido.id}"></td>
+					<td th:text="${pedido.cliente.username}"></td>
+					<td th:text="${pedido.estado}"></td>
+					<td >
+						<!-- Botón para borrar pedido -->
+						<form sec:authorize="hasRole('admin')" th:action="@{/borrarPedido}" method="post">
+							<input type="hidden" th:name="idPedido" th:value="${pedido.id}">
+							<button type="submit">Borrar</button>
+						</form>
+
+						<!-- Botón para aceptar pedido -->
+						<form th:action="@{/aceptarPedido}" method="post">
+							<input type="hidden" th:name="idPedido" th:value="${pedido.id}">
+							<button type="submit">Aceptar</button>
+						</form>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<h2 sec:authorize="hasRole('admin')" id="listarUsuarios">Listar Usuarios</h2>
+		<!-- Aquí va la tabla para listar usuarios -->
+		<table sec:authorize="hasRole('admin')" class="table">
+			<thead>
+				<tr>
+					<th>Nombre</th>
+					<th>NIF</th>
+					<th>Email</th>
+					<th>Username</th>
+					<th>Rol</th>
+					<th>Acciones</th>
+
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="user : ${usuarios}">
+					<td th:text="${user.nombre}"></td>
+					<td th:text="${user.nif}"></td>
+					<td th:text="${user.email}"></td>
+					<td th:text="${user.username}"></td>
+					<td><span th:each="rol : ${user.roles}" th:text="${rol.roleName} + ' '"></span></td>
+					<td>
+						<form th:action="@{/borrarUsuario}" method="post">
+							<input type="hidden" th:name="userId" th:value="${user.userID}">
+							<button type="submit">Borrar</button>
+						</form>
+					</td>
+			</tbody>
+		</table>
+	</div>
+
+	<div sec:authorize="hasRole('admin')" class="modal fade" id="crearUsuarioModal" tabindex="-1" role="dialog" aria-labelledby="crearUsuarioModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="crearUsuarioModalLabel">Crear Usuario</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<!-- Aquí va el formulario para crear usuarios -->
+					<form th:method="POST">
+						<label>Nombre</label>
+						<input type="text" id="nombre" placeholder="Nombre" name="nombre" required>
+						<br>
+						<label>Apellido1</label>
+						<input type="text" id="apellido1" placeholder="Apellido1" name="apellido1" required>
+						<br>
+						<label>Apellido2</label>
+						<input type="text" id="apellido2" placeholder="Apellido2" name="apellido2" required>
+						<br>
+						<label>NIF</label>
+						<input type="text" id="nif" placeholder="NIF" name="nif" required>
+						<br>
+						<label>Email</label>
+						<input type="email" id="email" placeholder="Email" name="email" required>
+						<br>
+						<label>Usuario</label>
+						<input type="text" id="username" placeholder="Usuario" name="username" required>
+						<br>
+						<label>Contraseña</label>
+						<input type="password" id="password" placeholder="Contraseña" name="password" required>
+						<br>
+						<label>Confirmar contraseña</label>
+						<input type="password" id="confirm_password" placeholder="Confirmar contraseña" required>
+						<br>
+						<label for="role">Selecciona un rol:</label>
+						<select name="role" id="role" required>
+							<option value="">Seleccione un rol</option>
+							<option th:each="rol : ${roles}" th:value="${rol.id}" th:text="${rol.roleName}"></option>
+						</select>
+						<br>
+						<button type="submit" class="btn btn-primary">Crear Usuario</button>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Scripts -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

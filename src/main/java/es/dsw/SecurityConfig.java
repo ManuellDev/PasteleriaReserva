@@ -29,7 +29,7 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-                .csrf(csrf -> csrf.disable())//Si se descomenta esta línea, no se requiere token csrf cada vez que debas realizar envío de datos al servidor. Se recomienda no realizar csrf.disable()
+                //.csrf(csrf -> csrf.disable())//Si se descomenta esta línea, no se requiere token csrf cada vez que debas realizar envío de datos al servidor. Se recomienda no realizar csrf.disable()
 
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/img/**").permitAll()
@@ -37,8 +37,7 @@ public class SecurityConfig {
                         .requestMatchers("/js/**").permitAll()
                         .requestMatchers("/bootstrap/**").permitAll()
                         .requestMatchers("/registro/**").permitAll()
-                        .requestMatchers("/BackOffice**").hasRole("admin")
-                        .requestMatchers("/BackOffice**").hasRole("pastelero")
+                        .requestMatchers("/BackOffice**").hasAnyRole("pastelero","admin")
                         .anyRequest().authenticated()
 
                 )

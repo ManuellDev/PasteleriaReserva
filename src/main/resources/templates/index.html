@@ -25,13 +25,20 @@
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/contacto}">Contacto</a>
             </li>
+             <li class="nav-item">
+                <a class="nav-link" sec:authorize="hasAnyRole('admin','pastelero')" th:href="@{/BackOffice}"><strong>Gestion de Pedidos y usuarios</strong></a>
+            </li>
         </ul>
     </div>
 
-    <!-- Formulario de inicio de sesión y registro -->
-    <div class="ml-auto">
-        <button class="btn btn-outline-success my-2 my-sm-0" onclick="window.location.href='/logout'">Cerrar Sesión</button>
-    </div>
+  <div class="ml-auto">
+    <form th:action="@{/logout}" method="POST" id="logoutForm">
+        <button type="submit" class="btn btn-outline-success my-2 my-sm-0">
+            Cerrar Sesión
+        </button>
+    </form>
+</div>
+
 </nav>
 
 

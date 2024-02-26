@@ -13,7 +13,7 @@ public class Producto {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id_producto")
-	private int id_producto;
+	private Integer id_producto;
 	@Column(name="nombre")
 	private String nombre;
 	@Column(name="descripcion")
@@ -23,7 +23,7 @@ public class Producto {
 	@Column(name="precio")
 	private float precio;
 
-	public Producto(int id_producto, String nombre, String descripcion, float precio, String imagen) {
+	public Producto(Integer id_producto, String nombre, String descripcion, float precio, String imagen) {
 	
 		this.id_producto = id_producto;
 		this.nombre = nombre;
@@ -38,10 +38,10 @@ public class Producto {
 	}
 
 
-	public int getId_producto() {
+	public Integer getId_producto() {
 		return id_producto;
 	}
-	public void setId_producto(int id_producto) {
+	public void setId_producto(Integer id_producto) {
 		this.id_producto = id_producto;
 	}
 	public String getNombre() {

@@ -32,6 +32,10 @@
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/contacto}">Contacto</a>
                 </li>
+                </li>
+                <li class="nav-item">
+                	<a class="nav-link" sec:authorize="hasAnyRole('admin','pastelero')" th:href="@{/BackOffice}"><strong>Gestion de Pedidos y usuarios</strong></a>
+                </li>
             </ul>
         </div>
 

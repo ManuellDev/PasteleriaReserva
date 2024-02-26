@@ -1,76 +1,75 @@
 package es.dsw.models;
 
+
+
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "CARRITO")
 public class Carrito {
-	private int id_carrito;
-	private int id_pedido;
-	private int id_producto;
-	private int cantidad_producto;
-	private String nombre;
-	private Float precio;
-	
-	
-	public Carrito(int id_carrito, int id_pedido, int id_producto, int cantidad_producto, String nombre, Float precio) {
-		super();
-		this.id_carrito = id_carrito;
-		this.id_pedido = id_pedido;
-		this.id_producto = id_producto;
-		this.cantidad_producto = cantidad_producto;
-		this.nombre = nombre;
-		this.precio = precio;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_carrito")
+    private Integer id;
+
+    @Column(name = "cantidad_producto")
+    private Integer cantidadProducto;
+
+    @ManyToOne
+    @JoinColumn(name = "id_pedido")
+    private Pedido pedido;
+
+    @ManyToOne
+    @JoinColumn(name = "id_producto")
+    private Producto producto;
+
+	public Carrito(Integer id, Integer cantidadProducto, Pedido pedido, Producto producto) {
+		this.id = id;
+		this.cantidadProducto = cantidadProducto;
+		this.pedido = pedido;
+		this.producto = producto;
 	}
+
 	public Carrito() {
 	}
 
-	public String getNombre() {
-		return nombre;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
-	public Float getPrecio() {
-		return precio;
+	public Integer getCantidadProducto() {
+		return cantidadProducto;
 	}
 
-	public void setPrecio(Float precio) {
-		this.precio = precio;
+	public void setCantidadProducto(Integer cantidadProducto) {
+		this.cantidadProducto = cantidadProducto;
 	}
 
-	
-	
-	public Carrito(int id_carrito, int id_pedido, int id_producto, int cantidad_producto) {
-		this.id_carrito = id_carrito;
-		this.id_pedido = id_pedido;
-		this.id_producto = id_producto;
-		this.cantidad_producto = cantidad_producto;
+	public Pedido getPedido() {
+		return pedido;
 	}
-	public int getId_carrito() {
-		return id_carrito;
+
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
 	}
-	public void setId_carrito(int id_carrito) {
-		this.id_carrito = id_carrito;
+
+	public Producto getProducto() {
+		return producto;
 	}
-	public int getId_pedido() {
-		return id_pedido;
-	}
-	public void setId_pedido(int id_pedido) {
-		this.id_pedido = id_pedido;
-	}
-	public int getId_producto() {
-		return id_producto;
-	}
-	public void setId_producto(int id_producto) {
-		this.id_producto = id_producto;
-	}
-	public int getCantidad_producto() {
-		return cantidad_producto;
-	}
-	public void setCantidad_producto(int cantidad_producto) {
-		this.cantidad_producto = cantidad_producto;
+
+	public void setProducto(Producto producto) {
+		this.producto = producto;
 	}
 	
 	
-	
 
+   
+
+    // Constructor, getters, setters
+    
+    
 }
