@@ -173,4 +173,11 @@ a:hover {
 .card-body{
 	padding: 20px;
 }
-
+.map-container {
+	padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px; /* Establece la altura del contenedor si deseas que tenga una altura específica */
+    margin: 0 auto; /* Centra horizontalmente */
+}

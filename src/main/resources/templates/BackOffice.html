@@ -7,100 +7,95 @@
 	<title>Backoffice de administración de una pastelería</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" th:href="@{/styles/BackOffice.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/styles/styles.css}">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-	<style>
 
-	</style>
-</head>
 
 <body>
 
-	<!-- Navbar -->
-	<nav class="navbar">
-		<div class="container-fluid">
-			<!-- Mi perfil -->
-			<div class="user-profile">
-				<h4>Mi Perfil</h4>
-				<p><strong>Usuario:</strong> <span th:text="${user.username}"></span></p>
-				<p><strong>Nombre:</strong> <span th:text="${user.nombre}"></span></p>
-				<p th:utext="'<strong>Apellidos:</strong> ' + ${user.apellido1} + ' ' + ${user.apellido2}"></p>
-			</div>
-			<a sec:authorize="hasRole('admin')" class="btn btn-primary" href="#crearUsuario" data-toggle="modal" data-target="#crearUsuarioModal">Crear
-				Usuario</a>
-			<form th:action="@{/logout}" method="POST" id="logoutForm">
-				<button id="btn-logout" type="submit" class="btn btn-primary" style="margin-top: 20px;"> Cerrar
-					Sesión</button>
-			</form>
-			<a class="btn btn-primary" th:href="@{/index}" style="margin-top: 20px;">Atras</a>
-		</div>
-
-
-	</nav>
+<nav class="navbar">
+    <div class="container-fluid">
+        <!-- Mi perfil -->
+        <div class="user-profile">
+            <h4>Mi Perfil</h4>
+            <p><strong>Usuario:</strong> <span th:text="${user.username}"></span></p>
+            <p><strong>Nombre:</strong> <span th:text="${user.nombre}"></span></p>
+            <p th:utext="'<strong>Apellidos:</strong> ' + ${user.apellido1} + ' ' + ${user.apellido2}"></p>
+        </div>
+        <div class="navbar-buttons">
+            <a sec:authorize="hasRole('admin')" class="btn btn-primary" href="#crearUsuario" data-toggle="modal" data-target="#crearUsuarioModal">Crear Usuario</a>
+            <form th:action="@{/logout}" method="POST" id="logoutForm">
+                <button id="btn-logout" type="submit" class="btn btn-primary">Cerrar Sesión</button>
+            </form>
+            <a class="btn btn-primary" th:href="@{/index}">Atrás</a>
+        </div>
+    </div>
+</nav>
 
 	<div sec:authorize="hasAnyRole('admin','pastelero')" class="page-content">
-		<h2  id="listarPedidos">Listar Pedidos</h2>
-		<!-- Aquí va la tabla para listar pedidos -->
-		<table class="table">
-			<thead>
-				<tr>
-					<th>ID</th>
-					<th>Cliente</th>
-					<th>Estado</th>
-					<th>Acciones</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="pedido : ${pedidos}">
-					<td th:text="${pedido.id}"></td>
-					<td th:text="${pedido.cliente.username}"></td>
-					<td th:text="${pedido.estado}"></td>
-					<td >
-						<!-- Botón para borrar pedido -->
-						<form sec:authorize="hasRole('admin')" th:action="@{/borrarPedido}" method="post">
-							<input type="hidden" th:name="idPedido" th:value="${pedido.id}">
-							<button type="submit">Borrar</button>
-						</form>
+    <h2 id="listarPedidos">Listar Pedidos</h2>
+    <!-- Aquí va la tabla para listar pedidos -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="pedido : ${pedidos}">
+                <td th:text="${pedido.id}"></td>
+                <td th:text="${pedido.cliente.username}"></td>
+                <td th:text="${pedido.estado}"></td>
+                <td>
+                    <!-- Botón para borrar pedido -->
+                    <form sec:authorize="hasRole('admin')" th:action="@{/borrarPedido}" method="post">
+                        <input type="hidden" th:name="idPedido" th:value="${pedido.id}">
+                        <button type="submit" class="btn btn-danger">Borrar</button>
+                    </form>
 
-						<!-- Botón para aceptar pedido -->
-						<form th:action="@{/aceptarPedido}" method="post">
-							<input type="hidden" th:name="idPedido" th:value="${pedido.id}">
-							<button type="submit">Aceptar</button>
-						</form>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+                    <!-- Botón para aceptar pedido -->
+                    <form  sec:authorize="hasRole('pastelero')" th:action="@{/aceptarPedido}" method="post">
+                        <input type="hidden" th:name="idPedido" th:value="${pedido.id}">
+                        <button type="submit" class="btn btn-success">Aceptar</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
-		<h2 sec:authorize="hasRole('admin')" id="listarUsuarios">Listar Usuarios</h2>
-		<!-- Aquí va la tabla para listar usuarios -->
-		<table sec:authorize="hasRole('admin')" class="table">
-			<thead>
-				<tr>
-					<th>Nombre</th>
-					<th>NIF</th>
-					<th>Email</th>
-					<th>Username</th>
-					<th>Rol</th>
-					<th>Acciones</th>
+    <h2 sec:authorize="hasRole('admin')" id="listarUsuarios">Listar Usuarios</h2>
+    <!-- Aquí va la tabla para listar usuarios -->
+    <table sec:authorize="hasRole('admin')" class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>NIF</th>
+                <th>Email</th>
+                <th>Username</th>
+                <th>Rol</th>
+                <th>Acciones</th>
 
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="user : ${usuarios}">
-					<td th:text="${user.nombre}"></td>
-					<td th:text="${user.nif}"></td>
-					<td th:text="${user.email}"></td>
-					<td th:text="${user.username}"></td>
-					<td><span th:each="rol : ${user.roles}" th:text="${rol.roleName} + ' '"></span></td>
-					<td>
-						<form th:action="@{/borrarUsuario}" method="post">
-							<input type="hidden" th:name="userId" th:value="${user.userID}">
-							<button type="submit">Borrar</button>
-						</form>
-					</td>
-			</tbody>
-		</table>
-	</div>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="user : ${usuarios}">
+                <td th:text="${user.nombre}"></td>
+                <td th:text="${user.nif}"></td>
+                <td th:text="${user.email}"></td>
+                <td th:text="${user.username}"></td>
+                <td><span th:each="rol : ${user.roles}" th:text="${rol.roleName} + ' '"></span></td>
+                <td>
+                    <form th:action="@{/borrarUsuario}" method="post">
+                        <input type="hidden" th:name="userId" th:value="${user.userID}">
+                        <button type="submit" class="btn btn-danger">Borrar</button>
+                    </form>
+                </td>
+        </tbody>
+    </table>
+</div>
 
 	<div sec:authorize="hasRole('admin')" class="modal fade" id="crearUsuarioModal" tabindex="-1" role="dialog" aria-labelledby="crearUsuarioModalLabel"
 		aria-hidden="true">
@@ -159,6 +154,31 @@
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<!-- Footer con redes sociales y descripción -->
+<footer class="bg-dark text-white py-4">
+    <!-- Descripción -->
+    <p class="mb-3">¡Síguenos en nuestras redes sociales para estar al tanto de nuestras deliciosas novedades!</p>
+
+    <!-- Redes Sociales -->
+    <!-- Agrega una nueva clase "social-icon" para controlar el tamaño -->
+    <div class="social-icons mb-3">
+        <a href="#" class="btn btn-icon btn-social">
+            <img th:src="@{/img/twitterico.png}" alt="Twitter" class="social-icon">
+        </a>
+        <a href="#" class="btn btn-icon btn-social">
+            <img th:src="@{/img/instagramico.png}" alt="Instagram" class="social-icon">
+        </a>
+        <a href="#" class="btn btn-icon btn-social">
+            <img  th:src="@{/img/facebookicon.png}" alt="Facebook" class="social-icon">
+        </a>
+        <a href="#" class="btn btn-icon btn-social">
+            <img  th:src="@{/img/tiktokicon.png}" alt="TikTok" class="social-icon">
+        </a>
+    </div>
+
+    <!-- Información de derechos reservados -->
+    <p>&copy; 2024 Pastelería Dulce Delicia. Todos los derechos reservados.</p>
+</footer>
 </body>
 
 </html>

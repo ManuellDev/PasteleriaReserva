@@ -4,16 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Carrito de Compra</title>
-    <meta name="_csrf" th:content="${_csrf.token}">
-    <meta name="_csrf_header" th:content="${_csrf.headerName}">
     <link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/styles/carrito.css}"> <!-- Agrega tus estilos CSS personalizados -->
+    <link rel="stylesheet" type="text/css" th:href="@{/styles/styles.css}"> <!-- Agrega tus estilos CSS personalizados -->
 
 </head>
-<body>
-     <div class="container">
-        <h2>Carrito de Compra</h2>
-        <table class="table">
-            <thead>
+<body class="carrito-body"> <!-- Aplica un fondo claro similar al del index -->
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" th:href="@{/index}">Dulce Delicia</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/index}">Inicio</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/productos}">Productos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/contacto}">Contacto</a>
+            </li>
+             <li class="nav-item">
+                <a class="nav-link" sec:authorize="hasAnyRole('admin','pastelero')" th:href="@{/BackOffice}"><strong>Gestion de Pedidos y usuarios</strong></a>
+            </li>
+        </ul>
+    </div>
+
+  <div class="ml-auto">
+    <form th:action="@{/logout}" method="POST" id="logoutForm">
+        <button type="submit" class="btn btn-outline-success my-2 my-sm-0">
+            Cerrar Sesión
+        </button>
+    </form>
+</div>
+
+</nav>
+
+<div class="container mt-4"> <!-- Agrega un margen superior para separar el contenido del navbar -->
+
+    <h2>Carrito de Compra</h2>
+    <div class="table-responsive"> <!-- Hace que la tabla sea responsive en dispositivos pequeños -->
+        <table class="table table-striped"> <!-- Utiliza una tabla con rayas y bordes -->
+            <thead class="thead-dark"> <!-- Utiliza un encabezado oscuro para la tabla -->
                 <tr>
                     <th>Nombre</th>
                     <th>Cantidad Producto</th>
@@ -21,16 +56,17 @@
                 </tr>
             </thead>
             <tbody>
-			 
-			    <tr th:each="producto : ${carritos.entrySet()}">
-			        <td th:text="${producto.value.nombre}"></td>
-			        <td th:text="${producto.value.cantidad_producto}"></td>
-			        <td th:text="${producto.value.precio}"></td>
-			    </tr>
-
+                <tr th:each="producto : ${carritos.entrySet()}">
+                    <td th:text="${producto.value.nombre}"></td>
+                    <td th:text="${producto.value.cantidad_producto}"></td>
+                    <td th:text="${producto.value.precio} +' '+'€'"></td>
+                </tr>
             </tbody>
         </table>
-        <table class="table">
+    </div>
+     <div class="table-responsive"> <!-- Hace que la tabla sea responsive en dispositivos pequeños -->
+        <table class="table table-striped"> <!-- Utiliza una tabla con rayas y bordes -->
+            <thead class="thead-dark"> <!-- Utiliza un encabezado oscuro para la tabla -->
          <thead>
                 <tr>
                     <th>Total:</th>
@@ -38,16 +74,44 @@
             </thead>
             <tbody>
                 <tr>
-                    <td th:text=@{${total}}>10€</td>
+                    <td th:text="@{${total}}+' '+'€'">10€</td>
                 </tr>
             </tbody>
         </table>
-        
-        <!-- Botón para confirmar la compra -->
-        <a id="confirmar-compra" class="btn btn-success" th:href="@{/pago}">Confirmar Compra</a>
     </div>
-    <script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
-    <script th:src="@{js/carrito.js}"></script>
-    
+           
+
+    <div class="row justify-content-end mt-4"> <!-- Alinea el botón a la derecha y agrega margen superior -->
+        <a id="confirmar-compra" class="btn btn-success mr-2" th:href="@{/pago}">Confirmar Compra</a>
+    </div>
+
+</div>
+<!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <!-- Descripción -->
+        <p class="mb-3">¡Síguenos en nuestras redes sociales para estar al tanto de nuestras deliciosas novedades!</p>
+        <!-- Redes Sociales -->
+        <!-- Agrega una nueva clase "social-icon" para controlar el tamaño -->
+        <div class="social-icons mb-3">
+            <a href="#" class="btn btn-icon btn-social">
+                <img th:src="@{/img/twitterico.png}" alt="Twitter" class="social-icon">
+            </a>
+            <a href="#" class="btn btn-icon btn-social">
+                <img th:src="@{/img/instagramico.png}" alt="Instagram" class="social-icon">
+            </a>
+            <a href="#" class="btn btn-icon btn-social">
+                <img  th:src="@{/img/facebookicon.png}" alt="Facebook" class="social-icon">
+            </a>
+            <a href="#" class="btn btn-icon btn-social">
+                <img  th:src="@{/img/tiktokicon.png}" alt="TikTok" class="social-icon">
+            </a>
+        </div>
+        <!-- Información de derechos reservados -->
+        <p>&copy; 2024 Pastelería Dulce Delicia. Todos los derechos reservados.</p>
+    </footer>
+
+<script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
+<script th:src="@{js/carrito.js}"></script>
+
 </body>
 </html>

@@ -1,5 +1,7 @@
 package es.dsw.models;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -29,6 +31,8 @@ public class Pago {
 
     @Column(name = "expiration_date")
     private String expirationDate;
+    @Column(name = "fechahora", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private LocalDateTime fechahora;
     // Constructor, getters, setters
 
 	public Pago(Integer id, User usuario, Pedido pedido, String nombre, String numeroTarjeta, String cvv,
@@ -42,6 +46,8 @@ public class Pago {
 		this.expirationDate = expirationDate;
 	}
 	public Pago() {
+        this.fechahora = LocalDateTime.now(); // Establecer la fecha y hora actual al crear el pedido
+
 	}
 	public Integer getId() {
 		return id;

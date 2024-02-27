@@ -1,6 +1,42 @@
-    body {
-      background-color: #f4f4f4;
-    }
-    .container {
-      margin-top: 50px;
-    }
+/* Estilos para el formulario de pago */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #fce8d5;
+    color: #3d3731;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    margin-top: 50px;
+}
+
+/* Estilos para los títulos */
+.text-center {
+    text-align: center;
+    color: #ff8364;
+}
+
+/* Estilos para los campos de formulario */
+.form-group label {
+    color: #ff8364;
+}
+
+.form-control {
+    border-color: #ff8364;
+}
+
+/* Estilos para el botón de pago */
+.btn-primary {
+    background-color: #ff8364;
+    border-color: #ff8364;
+}
+
+.btn-primary:hover {
+    background-color: #ff6b3b;
+    border-color: #ff6b3b;
+}
+
+.btn-primary:focus, .btn-primary.focus {
+    box-shadow: 0 0 0 0.2rem rgba(255, 131, 100, 0.5);
+}

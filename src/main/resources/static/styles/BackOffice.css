@@ -1,84 +1,102 @@
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
-        }
+/* Estilos personalizados */
+* {
+    padding: 0;
+    margin: 0;
+}
 
-        .navbar {
-            background-color: #955251 !important;
-            color: white;
-            height: 100vh;
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 250px;
-            overflow-y: auto;
-            padding-top: 20px;
-        }
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fce8d5; /* Cambiar al color de fondo de la vista de index */
+    color: #3d3731; /* Cambiar al color de texto de la vista de index */
+}
 
-        .navbar-brand {
-            font-weight: bold;
-            color: white !important;
-        }
+.navbar {
+    background-color: #ffffff; /* Cambiar al color de fondo de la barra de navegación de la vista de index */
+    color: #ff8364; /* Cambiar al color de texto de la barra de navegación de la vista de index */
+    height: auto;
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Agregar sombra para mejorar el contraste */
+}
 
-        .navbar-nav a {
-            color: white !important;
-        }
+.navbar-brand {
+    font-weight: bold;
+    color: #ff8364 !important; /* Cambiar al color de texto de la marca de la barra de navegación de la vista de index */
+}
 
-        .navbar-nav a:hover {
-            color: #dee2e6 !important;
-        }
+.navbar-nav a {
+    color: #3d3731 !important; /* Cambiar al color de texto de los enlaces de la barra de navegación de la vista de index */
+}
 
-        .navbar-nav .active {
-            font-weight: bold;
-        }
 
-        .page-content {
-            margin-left: 250px;
-            padding: 20px;
-        }
+.page-content {
+    padding: 20px;
+}
 
-        .user-profile {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            width: 200px;
-            background-color: #f8f9fa;
-            color: black; /* Cambiado a color negro para mejor contraste */
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            z-index: 1000; /* Asegura que el perfil esté sobre el contenido */
-        }
+.btn-primary {
+    color: #ffffff;
+    background-color: #ff8364; /* Cambiar al color de fondo del botón primario de la vista de index */
+    border-color: #ff8364; /* Cambiar al color del borde del botón primario de la vista de index */
+}
 
-        .user-profile h4 {
-            margin-bottom: 10px;
-        }
+.btn-primary:hover {
+    background-color: #e75b3c; /* Cambiar al color de fondo al pasar el mouse del botón primario de la vista de index */
+    border-color: #e75b3c; /* Cambiar al color del borde al pasar el mouse del botón primario de la vista de index */
+}
 
-        .user-profile p {
-            margin-bottom: 5px;
-        }
 
-        .btn-crear-usuario {
-            width: 400px;
-            margin-top: 20px;
-        }
-       
+.navbar .navbar-buttons {
+    display: flex;
+    flex-direction: row;
+}
 
-        @media (max-width: 768px) {
-            .navbar {
-                position: relative;
-                height: auto;
-                width: 100%;
-                margin-bottom: 20px;
-            }
-            .page-content {
-                margin-left: 0;
-            }
-            .user-profile {
-                position: relative;
-                width: 100%;
-                margin: 20px auto;
-                left: auto;
-                top: auto;
-            }
-}   
+.navbar .navbar-buttons .btn {
+    margin-right: 10px; /* Ajustar según sea necesario */
+    
+}
+.navbar .container-fluid {
+    display: flex;
+}
+
+.navbar .navbar-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  
+}
+/* Colores personalizados para los botones */
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+footer {
+    position: fixed; /* Fija el footer */
+    left: 0;
+    bottom: 0; /* Lo posiciona al final de la página */
+    width: 100%; /* Ocupa el ancho completo */
+    background-color: #343a40; /* Color de fondo del footer */
+    color: #ffffff; /* Color del texto del footer */
+    text-align: center; /* Centra el texto */
+    padding: 20px 0; /* Añade espacio alrededor del contenido del footer */
+}
+
+
+
+
+

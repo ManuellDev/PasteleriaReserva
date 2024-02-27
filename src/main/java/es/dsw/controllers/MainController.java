@@ -25,11 +25,13 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import es.dsw.auxmodels.CarritoAux;
 import es.dsw.models.Carrito;
+import es.dsw.models.Pago;
 import es.dsw.models.Pedido;
 import es.dsw.models.Producto;
 import es.dsw.models.Roles;
 import es.dsw.models.User;
 import es.dsw.repository.CarritoRepository;
+import es.dsw.repository.PagoRepository;
 import es.dsw.repository.PedidoRepository;
 import es.dsw.repository.ProductoRepository;
 import es.dsw.repository.RolRepository;
@@ -51,13 +53,13 @@ public class MainController {
 	private RolRepository rolRepository;
 	@Autowired
 	private PedidoRepository pedidoRepository;
+	@Autowired
+	private PagoRepository pagoRepository;
 
 
 
 	@GetMapping(value= {"/","/index"})
-	public String index(Model model,
-			@RequestParam(name = "username", required = false) String username,
-            @RequestParam(name = "password", required = false) String password){
+	public String index(Model model){
 		
 		
         return "index";  
@@ -173,8 +175,12 @@ public class MainController {
 	
 
 	@GetMapping(value= {"/pago"})
-	public String pago(){
+	public String pago(@ModelAttribute("carritos") Map<Integer, CarritoAux> carritos){
 		
+		 if (carritos.isEmpty()) {
+		        // Redirigir al usuario a la página de confirmación del carrito
+		        return "redirect:/productos";
+		    }
 		
         return "pago";  
 	}
@@ -249,39 +255,47 @@ public class MainController {
 	
 	
 	@PostMapping(value= {"/resumen"})
-	public String resumen(Model model, @SessionAttribute("carritos") Map<Integer, CarritoAux> carritos) {
+	public String resumen(Model model, @SessionAttribute("carritos") Map<Integer, CarritoAux> carritos,
+			@RequestParam(name ="card-number",defaultValue ="prueba") String cardnumber,
+			@RequestParam(name ="expiry",defaultValue ="prueba") String expiry,
+			@RequestParam(name ="cvv",defaultValue ="prueba") String cvv) {
+		
 	    // Obtener el usuario autenticado
 	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 	    String username = authentication.getName();
-
 	    // Buscar el usuario en la base de datos por su nombre de usuario
 	    User cliente = userRepository.findByUsername(username);
 
-	    if (cliente != null) {
-	        // Crear un nuevo objeto Pedido
+	    if (cliente != null ) {
+	    	model.addAttribute("nombreUsuario", cliente.getNombre());
+	        model.addAttribute("nifUsuario", cliente.getNif());
+	        model.addAttribute("emailUsuario", cliente.getEmail());
+	        
 	        Pedido pedido = new Pedido();
-	        // Establecer el usuario autenticado como cliente en el pedido
 	        pedido.setCliente(cliente);
-	        // Guardar el pedido en la base de datos
 	        pedidoRepository.save(pedido);
 	        
-	        // Iterar sobre los elementos del carrito y agregarlos a la base de datos
+	        Pago pago = new Pago();
+	        pago.setUsuario(cliente); 
+	        pago.setPedido(pedido); 
+	        pago.setNombre(cliente.getNombre());
+	        pago.setNumeroTarjeta(cardnumber);
+	        pago.setCvv(cvv);
+	        pago.setExpirationDate(expiry);
+	        pagoRepository.save(pago);
+	        
 	        for (CarritoAux carrito : carritos.values()) {
-	            // Crear un nuevo objeto Carrito
 	            Carrito nuevoCarrito = new Carrito();
-	            nuevoCarrito.setPedido(pedido); // Establecer el pedido para cada elemento del carrito
-	            // Configurar otros atributos del carrito según los datos de CarritoAux
+	            nuevoCarrito.setPedido(pedido); 
 	            nuevoCarrito.setCantidadProducto(carrito.getCantidad_producto());
-	            // Suponiendo que tienes un método para encontrar el Producto por su ID
 	            Producto producto = productoRepository.findById(carrito.getId_producto()).orElse(null);
 	            nuevoCarrito.setProducto(producto);
-	            // Guardar el carrito en la base de datos
-	            carritoRepository.save(nuevoCarrito); // Guardar cada elemento del carrito en la base de datos
+	            carritoRepository.save(nuevoCarrito); 
 	        }
 	        
 	        return "resumen";
 	    } else {
-	        return "error"; 
+	        return "redirect:/productos"; 
 	    }
 	}
 

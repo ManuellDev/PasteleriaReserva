@@ -11,6 +11,18 @@
     <script type="text/javascript" charset="utf8" th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
     <script type="text/javascript" charset="utf8" th:src="@{https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js}"></script>
     <script th:src="@{js/script.js}"></script>
+    <style>
+        /* Estilos para el footer */
+        footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background-color: #343a40; /* Cambia el color de fondo según tus preferencias */
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+    </style>
 </head>
 
 <body>
@@ -32,14 +44,67 @@
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/contacto}">Contacto</a>
                 </li>
-                </li>
                 <li class="nav-item">
                 	<a class="nav-link" sec:authorize="hasAnyRole('admin','pastelero')" th:href="@{/BackOffice}"><strong>Gestion de Pedidos y usuarios</strong></a>
                 </li>
             </ul>
         </div>
+    </nav>
 
+    <!-- Contenido de la página -->
+    <div class="container">
+        <h1>Contacto</h1>
+        <p>¡Contáctanos para hacer tus pedidos o cualquier consulta!</p>
+        <!-- Formulario de contacto (puedes agregar más campos según sea necesario) -->
+        <form>
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" class="form-control" id="nombre" placeholder="Ingrese su nombre">
+            </div>
+            <div class="form-group">
+                <label for="email">Correo electrónico:</label>
+                <input type="email" class="form-control" id="email" placeholder="Ingrese su correo electrónico">
+            </div>
+            <div class="form-group">
+                <label for="mensaje">Mensaje:</label>
+                <textarea class="form-control" id="mensaje" rows="3" placeholder="Escriba su mensaje aquí"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+    </div>
 
+    <!-- Mapa de Google Maps -->
+    <div class="map-container">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d387164.7003158004!2d-74.25819581493604!3d40.70531177927865!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20EE.%20UU.!5e0!3m2!1ses!2ses!4v1637076189672!5m2!1ses!2ses"  width="50%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <!-- Descripción -->
+        <p class="mb-3">¡Síguenos en nuestras redes sociales para estar al tanto de nuestras deliciosas novedades!</p>
+        <!-- Redes Sociales -->
+        <!-- Agrega una nueva clase "social-icon" para controlar el tamaño -->
+        <div class="social-icons mb-3">
+            <a href="#" class="btn btn-icon btn-social">
+                <img th:src="@{/img/twitterico.png}" alt="Twitter" class="social-icon">
+            </a>
+            <a href="#" class="btn btn-icon btn-social">
+                <img th:src="@{/img/instagramico.png}" alt="Instagram" class="social-icon">
+            </a>
+            <a href="#" class="btn btn-icon btn-social">
+                <img  th:src="@{/img/facebookicon.png}" alt="Facebook" class="social-icon">
+            </a>
+            <a href="#" class="btn btn-icon btn-social">
+                <img  th:src="@{/img/tiktokicon.png}" alt="TikTok" class="social-icon">
+            </a>
+        </div>
+        <!-- Información de derechos reservados -->
+        <p>&copy; 2024 Pastelería Dulce Delicia. Todos los derechos reservados.</p>
+    </footer>
+
+    <script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
+    <script th:src="@{https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js}"></script>
+    <script th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js}"></script>
 </body>
 
 </html>

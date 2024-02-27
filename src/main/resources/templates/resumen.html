@@ -1,11 +1,50 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resumen de Compra</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+      <link rel="stylesheet" type="text/css" th:href="@{/styles/resumen.css}">
+
 </head>
 <body>
-    
+  <div class="container">
+    <h2 class="text-center">Resumen de Compra</h2>
+<table class="table table-bordered">
+  <tbody>
+    <tr>
+      <th scope="row">Cliente</th>
+      <td id="nombre" th:text="${nombreUsuario}">Nombre del Cliente</td>
+    </tr>
+    <tr>
+      <th scope="row">NIF</th>
+      <td id="nif" th:text="${nifUsuario}">Número de Identificación Fiscal</td>
+    </tr>
+    <tr>
+      <th scope="row">Email</th>
+      <td id="email" th:text="${emailUsuario}">Correo Electrónico</td>
+    </tr>
+  </tbody>
+</table>
+    <div class="qr-code">
+      <canvas id="qrCanvas"></canvas>
+    </div>
+    <div class="text-center mt-3">
+      <small>Este código QR contiene información importante relacionada con tu compra. Escanéalo para acceder fácilmente a los detalles.</small>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!-- QR Code Generation Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+  <script th:src="@{js/resumen.js}"></script>
+
 </body>
 </html>
