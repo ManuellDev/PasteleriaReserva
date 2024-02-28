@@ -31,6 +31,10 @@ public class User implements UserDetails {
     private String username;
     @Column(name="PASSWORD_USF")
     private String password;
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private Set<Pago> pagos;
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+    private Set<Pedido> pedidos;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "USERROL",
@@ -38,6 +42,13 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "IDROL_URF")
     )
     private Set<Roles> roles;
+    @OneToMany(mappedBy = "pastelero", cascade = CascadeType.ALL)
+    private Set<Pedido> pedidosComoPastelero;
+    @OneToOne(mappedBy = "user")
+    private BakerDetails bakerDetails;
+    
+    
+    
     
 
 
@@ -121,6 +132,14 @@ public class User implements UserDetails {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Set<Pago> getPagos() {
+		return pagos;
+	}
+
+	public void setPagos(Set<Pago> pagos) {
+		this.pagos = pagos;
 	}
 
 	public Set<Roles> getRoles() {

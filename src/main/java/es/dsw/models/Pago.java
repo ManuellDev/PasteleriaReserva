@@ -12,7 +12,7 @@ public class Pago {
     @Column(name = "id_facturacion")
     private Integer id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_usuario")
     private User usuario;
 
@@ -81,6 +81,7 @@ public class Pago {
 	}
 	public String getCvv() {
 		return cvv;
+		
 	}
 	public void setCvv(String cvv) {
 		this.cvv = cvv;

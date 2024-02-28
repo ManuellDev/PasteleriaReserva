@@ -5,6 +5,7 @@ package es.dsw.models;
 
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 import jakarta.persistence.*;
 
@@ -20,14 +21,20 @@ public class Pedido {
     @JoinColumn(name = "id_cliente")
     private User cliente;
 
+    // Configuración de la relación con pastelero
     @ManyToOne
-    @JoinColumn(name = "id_pastelero")
+    @JoinColumn(name = "id_pastelero", insertable = false, updatable = false)
     private User pastelero;
 
     @Column(name = "estado", nullable = false, columnDefinition = "varchar(255) default 'Pendiente'")
     private String estado;
     @Column(name = "fechahora", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime fechahora;
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
+    private Set<Carrito> carritos;
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
+    private Set<Pago> pagos;
+    
  
 	public Pedido(Integer id, User cliente, User pastelero, String estado) {
 		this.id = id;

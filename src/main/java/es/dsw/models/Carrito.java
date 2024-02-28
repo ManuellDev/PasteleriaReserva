@@ -2,6 +2,8 @@ package es.dsw.models;
 
 
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -22,6 +24,8 @@ public class Carrito {
     @ManyToOne
     @JoinColumn(name = "id_producto")
     private Producto producto;
+    @Column(name = "fechahora", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private LocalDateTime fechahora;
 
 	public Carrito(Integer id, Integer cantidadProducto, Pedido pedido, Producto producto) {
 		this.id = id;
@@ -31,6 +35,8 @@ public class Carrito {
 	}
 
 	public Carrito() {
+        this.fechahora = LocalDateTime.now(); // Establecer la fecha y hora actual al crear el pedido
+
 	}
 
 	public Integer getId() {

@@ -30,6 +30,7 @@ import es.dsw.models.Pedido;
 import es.dsw.models.Producto;
 import es.dsw.models.Roles;
 import es.dsw.models.User;
+import es.dsw.repository.BakerDetailsRepository;
 import es.dsw.repository.CarritoRepository;
 import es.dsw.repository.PagoRepository;
 import es.dsw.repository.PedidoRepository;
@@ -55,7 +56,9 @@ public class MainController {
 	private PedidoRepository pedidoRepository;
 	@Autowired
 	private PagoRepository pagoRepository;
-
+	@Autowired
+	private BakerDetailsRepository bakerdetailsRepository;
+	
 
 
 	@GetMapping(value= {"/","/index"})
@@ -217,6 +220,16 @@ public class MainController {
 
         return "BackOffice";  
 	}
+    @PostMapping("/borrarUsuario")
+    public String borrarUsuario(@RequestParam("userId") @NonNull Integer userId) {
+        try {
+            userRepository.deleteById(userId);
+            return "redirect:/BackOffice";
+        } catch (Exception e) {
+            return "Error al borrar el usuario: " + e.getMessage();
+        }
+    }
+    
 	   @PostMapping("/aceptarPedido")
 	    public String aceptarPedido(Model model,@RequestParam("idPedido") @NonNull Integer idPedido) {
 	        // Obtener el usuario autenticado
@@ -251,6 +264,37 @@ public class MainController {
 	            return "error"; // Página de error
 	        }
 	    }
+	   @PostMapping("/borrarPedido")
+	   public String borrarPedido(@RequestParam("idPedido") @NonNull Integer idPedido) {
+	       try {
+	           // Buscar el pedido por su ID
+	           Optional<Pedido> optionalPedido = pedidoRepository.findById(idPedido);
+	           
+	           if (optionalPedido.isPresent()) {
+	               Pedido pedido = optionalPedido.get();
+	               
+	               // Establecer el pastelero en null para eliminar la referencia
+	               pedido.setPastelero(null);
+	               
+	               // Guardar el pedido modificado para actualizar la referencia
+	               pedidoRepository.save(pedido);
+	               
+	               // Finalmente, eliminar el pedido
+	               pedidoRepository.deleteById(idPedido);
+	               
+	               // Redirigir a la página de BackOffice en caso de éxito
+	               return "redirect:/BackOffice";
+	           } else {
+	               // Manejar el caso en el que el pedido no existe
+	               return "Error: No se encontró el pedido con ID " + idPedido;
+	           }
+	       } catch (Exception e) {
+	           // Manejar cualquier excepción que pueda ocurrir durante la eliminación
+	           return "Error al borrar el pedido: " + e.getMessage();
+	       }
+	   }
+
+
 	   
 	
 	
