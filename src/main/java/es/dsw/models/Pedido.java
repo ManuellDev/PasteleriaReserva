@@ -23,7 +23,7 @@ public class Pedido {
 
     // Configuración de la relación con pastelero
     @ManyToOne
-    @JoinColumn(name = "id_pastelero", insertable = false, updatable = false)
+    @JoinColumn(name = "id_pastelero")
     private User pastelero;
 
     @Column(name = "estado", nullable = false, columnDefinition = "varchar(255) default 'Pendiente'")
@@ -32,8 +32,8 @@ public class Pedido {
     private LocalDateTime fechahora;
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
     private Set<Carrito> carritos;
-    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
-    private Set<Pago> pagos;
+    @OneToOne(mappedBy = "pedido", cascade = CascadeType.ALL)
+    private Pago pago;
     
  
 	public Pedido(Integer id, User cliente, User pastelero, String estado) {

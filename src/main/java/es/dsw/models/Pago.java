@@ -2,6 +2,7 @@ package es.dsw.models;
 
 import java.time.LocalDateTime;
 
+
 import jakarta.persistence.*;
 
 @Entity
@@ -12,11 +13,11 @@ public class Pago {
     @Column(name = "id_facturacion")
     private Integer id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "id_usuario")
     private User usuario;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "id_pedido")
     private Pedido pedido;
 
@@ -33,7 +34,7 @@ public class Pago {
     private String expirationDate;
     @Column(name = "fechahora", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime fechahora;
-    // Constructor, getters, setters
+
 
 	public Pago(Integer id, User usuario, Pedido pedido, String nombre, String numeroTarjeta, String cvv,
 			String expirationDate) {

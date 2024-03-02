@@ -11,31 +11,24 @@ public class BakerDetails {
     @Column(name = "USERID")
     private Integer userId;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
-    @JoinColumn(name = "USERID")
-    private User user;
+    
     private String experiencia;
     private String especialidad;
-
+    @OneToOne
+    @JoinColumn(name = "USERID")
+    private User user;
     public BakerDetails() {
     }
 
-    public BakerDetails(User user, String experiencia, String especialidad) {
-        this.user = user;
+    public BakerDetails( String experiencia, String especialidad) {
+       
         this.experiencia = experiencia;
         this.especialidad = especialidad;
     }
 
   
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
+  
 
     public String getExperiencia() {
         return experiencia;

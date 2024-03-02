@@ -26,6 +26,7 @@ public class Carrito {
     private Producto producto;
     @Column(name = "fechahora", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime fechahora;
+ 
 
 	public Carrito(Integer id, Integer cantidadProducto, Pedido pedido, Producto producto) {
 		this.id = id;

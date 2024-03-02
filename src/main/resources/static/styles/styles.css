@@ -137,7 +137,7 @@ a:hover {
 }
 /* Tamaño del carrusel */
 .carousel-inner img {
-    max-width: 600px; /* Cambiar el tamaño según sea necesario */
+    max-width: 600px; 
     height: auto;
     margin: auto;
 }
@@ -145,12 +145,12 @@ a:hover {
 /* Tamaño de los controles del carrusel */
 .carousel-control-prev,
 .carousel-control-next {
-    width: 5%; /* Ajustar el tamaño de los controles según sea necesario */
+    width: 5%; 
 }
 
 /* Alineación del carrusel */
 .carousel {
-    margin-bottom: 20px; /* Espacio adicional debajo del carrusel */
+    margin-bottom: 20px; 
 }
 
 /* Estilos para el icono de carrito */
@@ -178,6 +178,6 @@ a:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 400px; /* Establece la altura del contenedor si deseas que tenga una altura específica */
-    margin: 0 auto; /* Centra horizontalmente */
+    height: 400px; 
+    margin: 0 auto; 
 }

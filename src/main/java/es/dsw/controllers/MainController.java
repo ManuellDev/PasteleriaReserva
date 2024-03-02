@@ -24,13 +24,13 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import es.dsw.auxmodels.CarritoAux;
+import es.dsw.auxmodels.Useraux;
 import es.dsw.models.Carrito;
 import es.dsw.models.Pago;
 import es.dsw.models.Pedido;
 import es.dsw.models.Producto;
 import es.dsw.models.Roles;
 import es.dsw.models.User;
-import es.dsw.repository.BakerDetailsRepository;
 import es.dsw.repository.CarritoRepository;
 import es.dsw.repository.PagoRepository;
 import es.dsw.repository.PedidoRepository;
@@ -56,9 +56,9 @@ public class MainController {
 	private PedidoRepository pedidoRepository;
 	@Autowired
 	private PagoRepository pagoRepository;
-	@Autowired
+	/*@Autowired
 	private BakerDetailsRepository bakerdetailsRepository;
-	
+	*/
 
 
 	@GetMapping(value= {"/","/index"})
@@ -220,6 +220,15 @@ public class MainController {
 
         return "BackOffice";  
 	}
+	 @PostMapping(value = {"/CrearUsuario"}, produces = "application/json")
+	 @ResponseBody
+	 public Useraux CrearUsuario(@RequestBody Useraux usuario) {
+		 
+		 
+		 
+		 return usuario;
+	 }
+	
     @PostMapping("/borrarUsuario")
     public String borrarUsuario(@RequestParam("userId") @NonNull Integer userId) {
         try {
@@ -271,15 +280,7 @@ public class MainController {
 	           Optional<Pedido> optionalPedido = pedidoRepository.findById(idPedido);
 	           
 	           if (optionalPedido.isPresent()) {
-	               Pedido pedido = optionalPedido.get();
-	               
-	               // Establecer el pastelero en null para eliminar la referencia
-	               pedido.setPastelero(null);
-	               
-	               // Guardar el pedido modificado para actualizar la referencia
-	               pedidoRepository.save(pedido);
-	               
-	               // Finalmente, eliminar el pedido
+	          
 	               pedidoRepository.deleteById(idPedido);
 	               
 	               // Redirigir a la página de BackOffice en caso de éxito

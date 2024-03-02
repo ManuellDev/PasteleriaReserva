@@ -1,4 +1,3 @@
-/* Estilos para el resumen de compra */
 body {
     font-family: 'Arial', sans-serif;
     background-color: #fce8d5;
@@ -11,7 +10,7 @@ body {
     margin: auto;
 }
 
-/* Estilos para la tabla */
+/* Tabla */
 .table {
     background-color: #ffffff;
     border: 1px solid #dee2e6;
@@ -21,18 +20,18 @@ body {
     border: 1px solid #dee2e6;
 }
 
-/* Estilos para el código QR */
+/* Código QR */
 .qr-code {
     text-align: center;
 }
 
-/* Estilos para el mensaje de información debajo del código QR */
+/* Mensaje de información debajo del código QR */
 .text-center {
     text-align: center;
     color: #6c757d;
 }
 
-/* Estilos para los detalles del cliente */
+/* Detalles del cliente */
 #nombre, #nif, #email {
     color: #6c757d;
 }
