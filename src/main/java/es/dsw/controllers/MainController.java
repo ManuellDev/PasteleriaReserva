@@ -90,47 +90,51 @@ public class MainController {
     }
 
 
-	@PostMapping("/registro")
-	public String registro(@RequestParam(name ="nombre",defaultValue ="prueba") String nombre,
-	                       @RequestParam(name ="apellido1",defaultValue ="prueba") String apellido1,
-	                       @RequestParam(name ="apellido2",defaultValue ="prueba") String apellido2,
-	                       @RequestParam(name ="nif",defaultValue ="prueba") String nif,
-	                       @RequestParam(name ="email",defaultValue ="prueba") String email,
-	                       @RequestParam(name ="usuario",defaultValue ="prueba") String usuario,
-	                       @RequestParam(name ="contraseña",defaultValue ="prueba") String contraseña)
-	{
-	    User user = new User();
-	 // Codificar la contraseña antes de devolver el objeto UserDetails
-	    String encodedPassword = passwordEncoder.encode(contraseña);        
-	    user.setNombre(nombre);
-	    user.setApellido1(apellido1);
-	    user.setApellido2(apellido2);
-	    user.setNif(nif);
-	    user.setEmail(email);
-	    user.setUsername(usuario);
-	    user.setPassword(encodedPassword);
-	    
-	    userRepository.save(user);
-	    Roles rol=null;
-	    Optional<Roles> r=rolRepository.findById(2);
-	    if (r.isPresent()) {
-	        rol=r.get(); 
-	    } else {
-	        // Handle the case where the "cliente" role is not found.
-	        // You could throw an exception, log an error, or create a default role.
-	        throw new RuntimeException("Cliente role not found!"); 
-	    }
-	    UserRolPK userRolPK = new UserRolPK(user.getUserID(), 2);
-	    Userrol ur=new Userrol(user,rol);
-	    ur.setId(userRolPK); 
+    @PostMapping("/registro")
+    public String registro(@RequestParam(name ="nombre",defaultValue ="prueba") String nombre,
+                           @RequestParam(name ="apellido1",defaultValue ="prueba") String apellido1,
+                           @RequestParam(name ="apellido2",defaultValue ="prueba") String apellido2,
+                           @RequestParam(name ="nif",defaultValue ="prueba") String nif,
+                           @RequestParam(name ="email",defaultValue ="prueba") String email,
+                           @RequestParam(name ="usuario",defaultValue ="prueba") String usuario,
+                           @RequestParam(name ="contraseña",defaultValue ="prueba") String contraseña,
+                           @RequestParam(name ="confirmar_contraseña",defaultValue ="prueba") String contraseñaconfirmar)
+    {
+    	 // Validar que las contraseñas coinciden y que el formato del NIF y del correo electrónico son válidos
+        if (!contraseña.equals(contraseñaconfirmar) || !nif.matches("\\d{8}[A-Za-z]") || !email.matches("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$")) {
+            return "redirect:/registro"; 
+        }
+        
+        User user = new User();
+        // Codificar la contraseña antes de devolver el objeto UserDetails
+        String encodedPassword = passwordEncoder.encode(contraseña);        
+        user.setNombre(nombre);
+        user.setApellido1(apellido1);
+        user.setApellido2(apellido2);
+        user.setNif(nif);
+        user.setEmail(email);
+        user.setUsername(usuario);
+        user.setPassword(encodedPassword);
+        
+        userRepository.save(user);
+        
+        Roles rol=null;
+        Optional<Roles> r=rolRepository.findById(2);
+        if (r.isPresent()) {
+            rol=r.get(); 
+        } else {
+            throw new RuntimeException("Cliente role not found!"); 
+        }
+        
+        UserRolPK userRolPK = new UserRolPK(user.getUserID(), 2);
+        Userrol ur=new Userrol(user,rol);
+        ur.setId(userRolPK); 
 
-	    userrolrepository.save(ur);
-	    
-	    
-	    return "redirect:/login"; // Redirige a la página de inicio de sesión después del registro
-	    
-	}
-	
+        userrolrepository.save(ur);
+        
+        return "redirect:/login"; 
+    }
+
 	
 	
     @GetMapping(value = {"/productos"})
@@ -188,7 +192,7 @@ public class MainController {
 	            total += c.getPrecio() * c.getCantidad_producto();
 	        }
 
-	        // Agrega el total al modelo
+	   
 	        model.addAttribute("total", total);
 
 		 
@@ -201,7 +205,6 @@ public class MainController {
 	public String pago(@ModelAttribute("carritos") Map<Integer, CarritoAux> carritos){
 		
 		 if (carritos.isEmpty()) {
-		        // Redirigir al usuario a la página de confirmación del carrito
 		        return "redirect:/productos";
 		    }
 		
@@ -298,12 +301,9 @@ public class MainController {
 	        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 	        String username = authentication.getName();
 	        
-	        // Buscar el usuario en la base de datos
 	        User pastelero = userRepository.findByUsername(username);
 	        
-	        // Verificar si el usuario autenticado es un pastelero
 	        if (pastelero != null && pastelero.getRoles().stream().anyMatch(r -> r.getRoleCode().equals("pastelero"))) {
-	            // Buscar el pedido en la base de datos
 	            Optional<Pedido> optionalPedido = pedidoRepository.findById(idPedido);
 	            if (optionalPedido.isPresent()) {
 	                Pedido pedido = optionalPedido.get();
@@ -319,11 +319,11 @@ public class MainController {
 	                return "redirect:/BackOffice"; // Redirigir al backoffice
 	            } else {
 	                model.addAttribute("error", "El pedido no se encontró.");
-	                return "error"; // Página de error
+	                return "error"; 
 	            }
 	        } else {
 	            model.addAttribute("error", "El usuario autenticado no es un pastelero.");
-	            return "error"; // Página de error
+	            return "error"; 
 	        }
 	    }
 	   @PostMapping({"/borrarPedido"})
@@ -336,14 +336,11 @@ public class MainController {
 	          
 	               pedidoRepository.deleteById(idPedido);
 	               
-	               // Redirigir a la página de BackOffice en caso de éxito
 	               return "redirect:/BackOffice";
 	           } else {
-	               // Manejar el caso en el que el pedido no existe
 	               return "Error: No se encontró el pedido con ID " + idPedido;
 	           }
 	       } catch (Exception e) {
-	           // Manejar cualquier excepción que pueda ocurrir durante la eliminación
 	           return "Error al borrar el pedido: " + e.getMessage();
 	       }
 	   }
