@@ -2,6 +2,8 @@ package es.dsw.models;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 import org.springframework.security.core.GrantedAuthority;
 
 @Entity
@@ -20,6 +22,8 @@ public class Roles implements GrantedAuthority {
 
     @Column(name = "ROLNAME_RF")
     private String roleName;
+    @OneToMany(mappedBy = "rol") 
+    private Set<Userrol> userroles; 
 
 	public Roles(Integer id, String roleCode, String roleName) {
 		this.id = id;

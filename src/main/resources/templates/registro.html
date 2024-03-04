@@ -8,7 +8,7 @@
 
 </head>
 <body>
-    <form th:action="@{/registro}" method="POST">
+    <form th:action="@{/registro}" method="POST" >
         <div class="logo">
             <img src="https://via.placeholder.com/150" alt="Logo de la Pastelería">
         </div>
@@ -21,7 +21,7 @@
         <input type="text" name="usuario" placeholder="Nombre de usuario" required>
         <input type="password" id="contraseña" name="contraseña" placeholder="Contraseña" required>
         <input type="password" id="confirmar_contraseña" name="confirmar_contraseña" placeholder="Confirmar contraseña" required>
-        <input type="submit" onsubmit="return validarFormulario()" value="Registrarse">
+        <input type="submit" onclick="validarFormulario()" value="Registrarse">
     </form>
     <script th:src="@{js/registro.js}"></script>
 

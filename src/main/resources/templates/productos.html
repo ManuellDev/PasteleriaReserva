@@ -68,7 +68,7 @@
                                 <img class="card-img-top" th:src="@{'img/' + ${producto.imagen}}" alt="Imagen del producto">
                                 <h5 class="card-title" th:text="${producto.nombre}"></h5>
                                 <p class="card-text" th:text="${producto.descripcion}"></p>
-                                <p class="card-text" th:text="'Precio: ' + ${producto.precio}"></p>
+                                <p class="card-text" th:text="'Precio: ' + ${producto.precio} + '€'"></p>
 <button class="btn btn-primary add-to-cart"
         th:attr="data-name=${producto.nombre}, data-id_producto=${producto.id_producto},data-price=${producto.precio}">
     Agregar al carrito

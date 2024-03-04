@@ -72,7 +72,7 @@
 
 		<h2 sec:authorize="hasRole('admin')" id="listarUsuarios">Listar Usuarios</h2>
 		<!-- Aquí va la tabla para listar usuarios -->
-		<table sec:authorize="hasRole('admin')" class="table">
+		<table sec:authorize="hasRole('admin')" class="table" id="usuarios">
 			<thead>
 				<tr>
 					<th>Nombre</th>
@@ -100,43 +100,7 @@
 			</tbody>
 		</table>
 	</div>
-	<script>
-    function enviarFormularioAJAX(formulario, event) {
-        // Evitar el envío del formulario por defecto
-        event.preventDefault();
-
-        // Serializar los datos del formulario en formato JSON
-        var datosFormulario = $(formulario).serializeArray();
-        var usuario = {};
-        $(datosFormulario).each(function(index, obj) {
-            usuario[obj.name] = obj.value;
-        });
-
-        // URL del servidor para recibir la solicitud
-        var urlServidor = "/CrearUsuario";
-
-        // Información de autorización
-      var token = $("meta[name='_csrf']").attr("content");
-	  var header = $("meta[name='_csrf_header']").attr("content");
-
-        // Enviar la solicitud AJAX
-        $.ajax({
-            url: urlServidor,
-            method: "POST",
-            contentType: "application/json", // Establecer el tipo de contenido como JSON
-            data: JSON.stringify(usuario), // Convertir los datos a formato JSON
-            beforeSend: function(request) {
-                request.setRequestHeader(header, token);
-            },
-            success: function(respuesta) {
-                console.log(respuesta);
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR, textStatus, errorThrown);
-            }
-        });
-    }
-</script>
+	
 
 
 	<div sec:authorize="hasRole('admin')" class="modal fade" id="crearUsuarioModal" tabindex="-1" role="dialog"
@@ -190,7 +154,7 @@
 							<input type="text" id="experiencia" placeholder="Experiencia" name="experiencia">
 							<br>
 						</div>				
-						<button type="submit" class="btn btn-primary" onsubmit="enviarFormularioAJAX(this, event)">Crear Usuario</button>
+						<button id="crearusuario" type="button" class="btn btn-primary">Crear Usuario</button>
 					</form>
 				</div>
 				<div class="modal-footer">

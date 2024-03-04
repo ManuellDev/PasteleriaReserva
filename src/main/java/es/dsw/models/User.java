@@ -42,9 +42,9 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "IDROL_URF")
     )
     private Set<Roles> roles;
-    @OneToMany(mappedBy = "pastelero")
+    @OneToMany(mappedBy = "pastelero" , cascade = CascadeType.ALL)
     private Set<Pedido> pedidosComoPastelero;
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private BakerDetails bakerDetails;
     
     

@@ -25,18 +25,23 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import es.dsw.auxmodels.CarritoAux;
 import es.dsw.auxmodels.Useraux;
+import es.dsw.models.BakerDetails;
 import es.dsw.models.Carrito;
 import es.dsw.models.Pago;
 import es.dsw.models.Pedido;
 import es.dsw.models.Producto;
 import es.dsw.models.Roles;
 import es.dsw.models.User;
+import es.dsw.models.UserRolPK;
+import es.dsw.models.Userrol;
+import es.dsw.repository.BakerDetailsRepository;
 import es.dsw.repository.CarritoRepository;
 import es.dsw.repository.PagoRepository;
 import es.dsw.repository.PedidoRepository;
 import es.dsw.repository.ProductoRepository;
 import es.dsw.repository.RolRepository;
 import es.dsw.repository.UserRepository;
+import es.dsw.repository.Userrolrepository;
 
 
 @Controller
@@ -56,9 +61,10 @@ public class MainController {
 	private PedidoRepository pedidoRepository;
 	@Autowired
 	private PagoRepository pagoRepository;
-	/*@Autowired
+	@Autowired
 	private BakerDetailsRepository bakerdetailsRepository;
-	*/
+	@Autowired
+	private Userrolrepository userrolrepository;
 
 
 	@GetMapping(value= {"/","/index"})
@@ -105,6 +111,20 @@ public class MainController {
 	    user.setPassword(encodedPassword);
 	    
 	    userRepository.save(user);
+	    Roles rol=null;
+	    Optional<Roles> r=rolRepository.findById(2);
+	    if (r.isPresent()) {
+	        rol=r.get(); 
+	    } else {
+	        // Handle the case where the "cliente" role is not found.
+	        // You could throw an exception, log an error, or create a default role.
+	        throw new RuntimeException("Cliente role not found!"); 
+	    }
+	    UserRolPK userRolPK = new UserRolPK(user.getUserID(), 2);
+	    Userrol ur=new Userrol(user,rol);
+	    ur.setId(userRolPK); 
+
+	    userrolrepository.save(ur);
 	    
 	    
 	    return "redirect:/login"; // Redirige a la página de inicio de sesión después del registro
@@ -221,15 +241,48 @@ public class MainController {
         return "BackOffice";  
 	}
 	 @PostMapping(value = {"/CrearUsuario"}, produces = "application/json")
-	 @ResponseBody
+	 	@ResponseBody
 	 public Useraux CrearUsuario(@RequestBody Useraux usuario) {
-		 
+		
+		    User user = new User();
+		 // Codificar la contraseña antes de devolver el objeto UserDetails
+		    String encodedPassword = passwordEncoder.encode(usuario.getPassword());        
+		    user.setNombre(usuario.getNombre());
+		    user.setApellido1(usuario.getApellido1());
+		    user.setApellido2(usuario.getApellido2());
+		    user.setNif(usuario.getNif());
+		    user.setEmail(usuario.getEmail());
+		    user.setUsername(usuario.getUsuario());
+		    user.setPassword(encodedPassword);
+		    
+		    userRepository.save(user);
+		    Roles rol=null;
+			@SuppressWarnings("null")
+			Optional<Roles> r=rolRepository.findById(usuario.getRol());
+		    if (r.isPresent()) {
+		        rol=r.get(); 
+		    } else {
+		        throw new RuntimeException("Cliente role not found!"); 
+		    }
+		    UserRolPK userRolPK = new UserRolPK(user.getUserID(), rol.getId());
+		    Userrol ur=new Userrol(user,rol);
+		    ur.setId(userRolPK); 
+
+		    userrolrepository.save(ur);
+		    
+		    if(usuario.getRol()==3) {
+		    	BakerDetails pastelero=new BakerDetails();
+		    	 pastelero.setUserId(user.getUserID());
+		    	 pastelero.setExperiencia(usuario.getExperiencia());
+		    	 pastelero.setEspecialidad(usuario.getEspecialidad());
+		    	 bakerdetailsRepository.save(pastelero);	
+		    }
 		 
 		 
 		 return usuario;
 	 }
 	
-    @PostMapping("/borrarUsuario")
+    @PostMapping({"/borrarUsuario"})
     public String borrarUsuario(@RequestParam("userId") @NonNull Integer userId) {
         try {
             userRepository.deleteById(userId);
@@ -239,7 +292,7 @@ public class MainController {
         }
     }
     
-	   @PostMapping("/aceptarPedido")
+	   @PostMapping({"/aceptarPedido"})
 	    public String aceptarPedido(Model model,@RequestParam("idPedido") @NonNull Integer idPedido) {
 	        // Obtener el usuario autenticado
 	        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -273,7 +326,7 @@ public class MainController {
 	            return "error"; // Página de error
 	        }
 	    }
-	   @PostMapping("/borrarPedido")
+	   @PostMapping({"/borrarPedido"})
 	   public String borrarPedido(@RequestParam("idPedido") @NonNull Integer idPedido) {
 	       try {
 	           // Buscar el pedido por su ID
